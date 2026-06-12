@@ -8,7 +8,7 @@ module Receiver
     input clk,
     input rst,
     input rx,
-    input s_tick,
+    input rx_s_tick,
     output wire [7:0] dout,
     output reg rx_done_tick
     );
@@ -64,7 +64,7 @@ module Receiver
              
              
             START:  
-            if(s_tick==1'b1)
+            if(rx_s_tick==1'b1)
               if(s_reg ==7)
               begin
                 next_state =DATA;
@@ -75,7 +75,7 @@ module Receiver
         
                  
             DATA:  
-            if(s_tick==1'b1)
+            if(rx_s_tick==1'b1)
             begin
               if(s_reg ==15)
                 begin
@@ -99,7 +99,7 @@ module Receiver
             end
             
             STOP:
-            if(s_tick==1'b1)
+            if(rx_s_tick==1'b1)
             begin
                 if(s_reg ==SB_TICK -1)
                     begin
