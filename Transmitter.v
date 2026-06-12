@@ -5,7 +5,7 @@ module transmitor#(
     parameter SB_TICK = 16
 )(
     input clk, rst,
-    input s_tick, tx_start,
+    input tx_s_tick, tx_start,
     input [7:0] tx_din,
     output reg tx_done_tick,
     output wire tx
@@ -63,7 +63,7 @@ tx_next = tx_reg ;
        START:
        begin
        tx_next=1'b0; 
-           if(s_tick== 1'b1)
+           if(tx_s_tick== 1'b1)
                  if( s_reg==15)
                      begin
                          next_state=DATA;
@@ -77,7 +77,7 @@ tx_next = tx_reg ;
         DATA:
         begin
         tx_next =  b_reg[0];
-            if(s_tick==1'b1)
+            if(tx_s_tick==1'b1)
                if(s_reg==15)
                begin
                s_next=1'b0;
@@ -97,7 +97,7 @@ tx_next = tx_reg ;
          STOP:
          begin
          tx_next= 1'b1;
-             if(s_tick==1'b1)
+             if(tx_s_tick==1'b1)
                if(s_reg == SB_TICK-1)
                     begin
                     next_state = IDLE;
